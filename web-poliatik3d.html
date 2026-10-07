@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Poliatik 3D</title>
+<meta name="description" content="Poliatik 3D: figuras y muñecos impresos en 3D. Dale la forma a lo que te imaginas.">
+<link rel="icon" href="assets/instagram/profile.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#214f32; --green:#346d3c; --leaf:#41873d; --lime:#6fa84b; --sage:#9bbe70; --mist:#c8dfb9;
+  --bg:#f5faf1; --card:#ffffff; --ink:#17301f; --muted:#5b7263; --line:#dbe8d1;
+  --shadow:0 10px 30px rgba(33,79,50,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:'Fraunces',serif;line-height:1.1}
+.wrap{width:min(1180px,100% - 32px);margin-inline:auto}
+::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--lime);border-radius:10px}
+
+/* nav */
+nav{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(245,250,241,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-weight:800;font-size:1.25rem;color:var(--forest)}
+.brand img{width:38px;height:38px;border-radius:50%;border:2px solid var(--lime)}
+.links{display:flex;gap:26px;align-items:center;font-weight:500}
+.links a:hover{color:var(--leaf)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 22px;border-radius:999px;font-weight:600;border:0;cursor:pointer;font:inherit;font-weight:600;transition:.25s}
+.btn-primary{background:var(--leaf);color:#fff;box-shadow:0 6px 16px rgba(65,135,61,.35)}
+.btn-primary:hover{background:var(--forest);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--forest);border:2px solid var(--forest)}
+.btn-ghost:hover{background:var(--forest);color:#fff}
+
+/* hero */
+.hero{padding:120px 0 70px;background:radial-gradient(900px 400px at 85% 0,var(--mist),transparent 70%),radial-gradient(600px 300px at 0 100%,#e4f1d9,transparent 70%)}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.eyebrow{display:inline-block;background:var(--mist);color:var(--forest);padding:6px 14px;border-radius:999px;font-weight:600;font-size:.85rem;margin-bottom:18px}
+.hero h1{font-size:clamp(2.4rem,5.4vw,4.4rem);font-weight:800;color:var(--forest)}
+.hero h1 em{font-style:normal;color:var(--leaf)}
+.hero p.lead{margin:20px 0 28px;font-size:1.15rem;color:var(--muted);max-width:520px}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+.ig-card{background:var(--card);border-radius:28px;box-shadow:var(--shadow);padding:26px;border:1px solid var(--line);position:relative;overflow:hidden}
+.ig-card::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,var(--forest),var(--lime),var(--sage))}
+.ig-top{display:flex;gap:20px;align-items:center}
+.ring{width:96px;height:96px;border-radius:50%;padding:4px;flex:none;background:conic-gradient(from 0deg,var(--forest),var(--lime),var(--sage),var(--forest));animation:spin 8s linear infinite}
+.ring span{display:block;width:100%;height:100%;border-radius:50%;background:#fff;padding:3px}
+.ring img{width:100%;height:100%;border-radius:50%;object-fit:cover;animation:spin 8s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.stats{display:flex;gap:22px;text-align:center}
+.stats b{display:block;font-size:1.25rem;color:var(--forest)}
+.stats small{color:var(--muted);font-size:.8rem}
+.ig-name{margin-top:16px;font-weight:700;font-size:1.05rem}
+.ig-handle{color:var(--leaf);font-weight:500}
+.ig-bio{margin:6px 0 16px;color:var(--muted);font-size:.95rem}
+.ig-actions{display:flex;gap:10px}
+.ig-actions .btn{flex:1;padding:10px 14px;font-size:.92rem}
+.mini{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}
+.mini img{aspect-ratio:1;object-fit:cover;border-radius:12px;width:100%}
+
+/* sections */
+section{padding:84px 0}
+.sec-head{text-align:center;margin-bottom:38px}
+.sec-head h2{font-size:clamp(1.9rem,4vw,3rem);color:var(--forest)}
+.sec-head p{color:var(--muted);margin-top:10px}
+
+/* catalog */
+#catalogo{background:#fff}
+.tools{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:34px}
+.tools input,.tools select{font:inherit;padding:12px 18px;border-radius:999px;border:2px solid var(--line);background:var(--bg);color:var(--ink);outline:none;min-width:240px}
+.tools input:focus,.tools select:focus{border-color:var(--lime)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;transition:.3s;box-shadow:0 2px 8px rgba(33,79,50,.05)}
+.card:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:var(--sage)}
+.card .pic{aspect-ratio:1;overflow:hidden;background:var(--mist)}
+.card .pic img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.card:hover .pic img{transform:scale(1.07)}
+.card .body{padding:16px 18px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card h3{font-size:1.1rem;font-weight:600;font-family:'Outfit',sans-serif;line-height:1.25;min-height:2.5em}
+.weight{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;background:var(--bg);border:1px solid var(--line);color:var(--green);padding:4px 12px;border-radius:999px;font-size:.85rem;font-weight:600}
+.price{font-family:'Fraunces',serif;font-weight:800;font-size:1.7rem;color:var(--forest);margin-top:auto}
+.price small{display:block;font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:500;color:var(--muted)}
+.price .alt{display:block;font-size:1.05rem;color:var(--leaf)}
+.card .btn{padding:10px 16px;font-size:.9rem;background:var(--forest);color:#fff}
+.card .btn:hover{background:var(--leaf)}
+.empty{text-align:center;color:var(--muted);padding:40px 0;display:none}
+.note{text-align:center;color:var(--muted);font-size:.85rem;margin-top:26px}
+
+/* about */
+#nosotros .wrap{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:center}
+#nosotros h2{font-size:clamp(1.9rem,4vw,3rem);color:var(--forest);margin-bottom:16px}
+#nosotros p{color:var(--muted);margin-bottom:14px;font-size:1.05rem}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.pills span{background:var(--mist);color:var(--forest);padding:7px 15px;border-radius:999px;font-weight:600;font-size:.88rem}
+.about-pics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.about-pics img{width:100%;aspect-ratio:3/5;object-fit:cover;border-radius:18px;box-shadow:var(--shadow);transition:.3s}
+.about-pics img:nth-child(2){margin-top:28px}
+.about-pics img:hover{transform:rotate(-2deg) scale(1.03)}
+
+/* contact */
+#contacto{background:linear-gradient(135deg,var(--forest),var(--green));color:#fff;text-align:center}
+#contacto h2{font-size:clamp(2rem,4.5vw,3.3rem);margin-bottom:14px}
+#contacto p{max-width:560px;margin:0 auto 28px;color:var(--mist);font-size:1.1rem}
+#contacto .btn{background:#fff;color:var(--forest);font-size:1.05rem;padding:15px 32px}
+#contacto .btn:hover{background:var(--mist)}
+footer{background:#163824;color:var(--sage);padding:26px 0;text-align:center;font-size:.9rem}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease;transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.ring,.ring img{animation:none}}
+
+@media(max-width:860px){
+  .hero .wrap,#nosotros .wrap{grid-template-columns:1fr}
+  .hero{padding-top:100px}
+  .links a:not(.btn){display:none}
+  section{padding:60px 0}
+}
+@media(max-width:520px){
+  .grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .card .body{padding:12px 12px 16px}
+  .card h3{font-size:.95rem}
+  .price{font-size:1.35rem}
+  .card .btn{font-size:.82rem;padding:9px 10px}
+  .tools input,.tools select{min-width:0;width:100%}
+  .stats{gap:14px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#inicio" class="brand"><img src="assets/instagram/profile.jpg" alt="Logo Poliatik 3D">Poliatik 3D</a>
+    <div class="links">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+      <a class="btn btn-primary" href="https://ig.me/m/poliatik3d" target="_blank" rel="noopener">Pedir por IG</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="wrap">
+    <div class="rv">
+      <span class="eyebrow">Impresiones 3D · Colegio Jean Piaget</span>
+      <h1>Dale la forma a lo que <em>te imaginas</em></h1>
+      <p class="lead">Somos un emprendimiento que se dedica a vender muñecos impresos en 3D. Elegí tu figura del catálogo y pedila por Instagram.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#catalogo">Ver catálogo</a>
+        <a class="btn btn-ghost" href="https://www.instagram.com/poliatik3d/" target="_blank" rel="noopener">@poliatik3d</a>
+      </div>
+    </div>
+    <div class="ig-card rv" style="--d:.15s">
+      <div class="ig-top">
+        <div class="ring"><span><img src="assets/instagram/profile.jpg" alt="Poliatik 3D"></span></div>
+        <div class="stats">
+          <div><b>6</b><small>publicaciones</small></div>
+          <div><b>99</b><small>seguidores</small></div>
+          <div><b>16</b><small>seguidos</small></div>
+        </div>
+      </div>
+      <div class="ig-name">Poliatik 3D</div>
+      <a class="ig-handle" href="https://www.instagram.com/poliatik3d/" target="_blank" rel="noopener">@poliatik3d</a>
+      <p class="ig-bio">Somos un emprendimiento que se dedica a vender muñecos impresos en 3D, ubicado en el colegio Jean Piaget</p>
+      <div class="ig-actions">
+        <a class="btn btn-primary" href="https://www.instagram.com/poliatik3d/" target="_blank" rel="noopener">Seguir</a>
+        <a class="btn btn-ghost" href="https://ig.me/m/poliatik3d" target="_blank" rel="noopener">Mensaje</a>
+      </div>
+      <div class="mini">
+        <img src="assets/instagram/post-2.jpg" alt="Poliatik 3D, dale la forma a lo que te imaginas" loading="lazy">
+        <img src="assets/instagram/post-4.jpg" alt="Un día de trabajo en el emprendimiento" loading="lazy">
+        <img src="assets/instagram/post-5.jpg" alt="Somos Poliatik" loading="lazy">
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="catalogo">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>Catálogo de figuras</h2>
+      <p>Elegí la que más te guste y pedila por mensaje directo en Instagram.</p>
+    </div>
+    <div class="tools rv">
+      <input id="q" type="search" placeholder="Buscar figura…" aria-label="Buscar figura">
+      <select id="sort" aria-label="Ordenar">
+        <option value="n">Orden original</option>
+        <option value="asc">Precio: menor a mayor</option>
+        <option value="desc">Precio: mayor a menor</option>
+        <option value="az">Nombre A–Z</option>
+      </select>
+    </div>
+    <div class="grid" id="grid"></div>
+    <p class="empty" id="empty">No encontramos figuras con ese nombre.</p>
+    <p class="note">El peso es el aproximado de la figura. Precios en pesos argentinos.</p>
+  </div>
+</section>
+
+<section id="nosotros">
+  <div class="wrap">
+    <div class="rv">
+      <h2>Quiénes somos</h2>
+      <p>Somos un equipo de siete estudiantes que armó su propio emprendimiento de impresión 3D en el colegio Jean Piaget.</p>
+      <p>Hacemos muñecos y figuras temáticas, y también trabajos personalizados.</p>
+      <div class="pills"><span>Figuras temáticas</span><span>Personalizados</span><span>Impresión 3D</span></div>
+    </div>
+    <div class="about-pics rv" style="--d:.15s">
+      <img src="assets/instagram/post-2.jpg" alt="Contáctanos para hacer tus sueños realidad" loading="lazy">
+      <img src="assets/instagram/post-4.jpg" alt="Un día de trabajo" loading="lazy">
+      <img src="assets/instagram/post-5.jpg" alt="Somos Poliatik" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="wrap rv">
+    <h2>¿Querés tu figura?</h2>
+    <p>Escribinos por mensaje directo en Instagram con el nombre de la figura que elegiste.</p>
+    <a class="btn" href="https://ig.me/m/poliatik3d" target="_blank" rel="noopener">Pedir por Instagram</a>
+  </div>
+</section>
+
+<footer>© 2026 Poliatik 3D · <a href="https://www.instagram.com/poliatik3d/" target="_blank" rel="noopener">@poliatik3d</a></footer>
+
+<script>
+const FIGURAS = [{"n": 1, "name": "Satoru Gojo (Jujutsu Kaisen)", "peso": 65, "precio": 7000, "img": "01.jpg"}, {"n": 3, "name": "Toothless", "peso": 84, "precio": 8000, "img": "03.jpg"}, {"n": 4, "name": "Pikachu", "peso": 217, "precio": 13000, "img": "04.jpg"}, {"n": 5, "name": "Goku Limit Break", "peso": 84, "precio": 8000, "img": "05.jpg"}, {"n": 6, "name": "Ratatouille (Remy)", "peso": 29, "precio": 3000, "img": "06.jpg"}, {"n": 7, "name": "Bob Minion", "peso": 269, "precio": 14000, "img": "07.jpg"}, {"n": 8, "name": "Knitted Kitty Keychain", "peso": 14, "precio": 2000, "img": "08.jpg"}, {"n": 9, "name": "Pantera Rosa", "peso": 123, "precio": 9000, "img": "09.jpg"}, {"n": 10, "name": "Angel (Stitch)", "peso": 714, "precio": 30000, "img": "10.jpg"}, {"n": 11, "name": "Knitted Cat With Heart", "peso": 24, "precio": 3000, "img": "11.jpg"}, {"n": 12, "name": "Daisy (set de 6)", "peso": 30, "precio": 6000, "img": "12.jpg"}, {"n": 13, "name": "Umbreon", "peso": 280, "precio": 15000, "img": "13.jpg"}, {"n": 14, "name": "Squirtle", "peso": 105, "precio": 9000, "img": "14.jpg"}, {"n": 15, "name": "Stitch (2965755)", "peso": 232, "precio": 13000, "img": "15.jpg"}, {"n": 16, "name": "Michael Myers", "peso": 117, "precio": 9000, "img": "16.jpg"}, {"n": 17, "name": "Daisy Keychain", "peso": 5, "precio": 2000, "img": "17.jpg"}, {"n": 18, "name": "Charizard", "peso": 248, "precio": 14000, "img": "18.jpg"}, {"n": 19, "name": "Little Pikachu", "peso": 4, "precio": 5000, "img": "19.jpg"}, {"n": 20, "name": "Yoshi", "peso": 129, "precio": 10000, "img": "20.jpg"}, {"n": 21, "name": "Spider-Noir Funko", "peso": 50, "precio": 7000, "img": "21.jpg"}, {"n": 22, "name": "Skipper", "peso": 157, "precio": 11000, "img": "22.jpg"}, {"n": 23, "name": "Cute Halloween VOL1", "peso": 69, "precio": 4000, "img": "23.jpg"}, {"n": 24, "name": "Fidget Spiderweb Twist", "peso": 38, "precio": 3000, "img": "24.jpg"}, {"n": 25, "name": "Grogu", "peso": 449, "precio": 21000, "img": "25.jpg"}, {"n": 26, "name": "Phone Stand 2025 Cyber", "peso": 101, "precio": 9000, "img": "26.jpg"}, {"n": 27, "name": "Valet tray / vide-poche", "peso": 45, "precio": 3000, "img": "27.jpg"}, {"n": 28, "name": "Stitch (1283749)", "peso": 406, "precio": 19000, "img": "28.jpg"}, {"n": 29, "name": "Q-version Batman", "peso": 59, "precio": 4000, "img": "29.jpg"}, {"n": 30, "name": "Batman", "peso": 38, "precio": 6000, "img": "30.jpg"}, {"n": 31, "name": "Sonic the Hedgehog", "peso": 355, "precio": 17000, "img": "31.jpg"}, {"n": 32, "name": "Stitch multi-part", "peso": 176, "precio": 11000, "img": "32.jpg"}, {"n": 33, "name": "Mickey Mouse (1817848)", "peso": 206, "precio": 12000, "img": "33.jpg"}, {"n": 34, "name": "Eevee", "peso": 563, "precio": 25000, "img": "34.jpg"}, {"n": 35, "name": "Funko Pop Spider-Man", "peso": 55, "precio": 7000, "img": "35.jpg"}, {"n": 36, "name": "Mario Wall Art", "peso": 272, "precio": 14000, "img": "36.jpg", "precio2": 12000, "tipo": "Grande", "tipo2": "Chica"}, {"n": 37, "name": "Bowser", "peso": 608, "precio": 26000, "img": "37.jpg"}, {"n": 38, "name": "Donald Duck", "peso": 290, "precio": 15000, "img": "38.jpg"}, {"n": 39, "name": "Mickey Mouse figurine", "peso": 93, "precio": 8000, "img": "39.jpg"}, {"n": 40, "name": "Formula 1 Kit Card", "peso": 56, "precio": 4000, "img": "40.jpg"}, {"n": 41, "name": "F1 2026 Team Logos Keychain (Red Bull)", "peso": 6, "precio": 2000, "img": "41.jpg"}, {"n": 42, "name": "McLaren F1 (en partes)", "peso": 371, "precio": 16000, "img": "42.jpg"}, {"n": 43, "name": "F1 Logo", "peso": 52, "precio": 7000, "img": "43.jpg"}, {"n": 44, "name": "Spider-Man", "peso": 236, "precio": 13000, "img": "44.jpg"}];
+const fmt = n => '$' + n.toLocaleString('es-AR');
+const grid = document.getElementById('grid'), q = document.getElementById('q'), sortEl = document.getElementById('sort'), empty = document.getElementById('empty');
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 }) : null;
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function render() {
+  const t = q.value.trim().toLowerCase();
+  let list = FIGURAS.filter(f => f.name.toLowerCase().includes(t));
+  const s = sortEl.value;
+  if (s === 'asc') list.sort((a, b) => a.precio - b.precio);
+  else if (s === 'desc') list.sort((a, b) => b.precio - a.precio);
+  else if (s === 'az') list.sort((a, b) => a.name.localeCompare(b.name, 'es'));
+  else list.sort((a, b) => a.n - b.n);
+  empty.style.display = list.length ? 'none' : 'block';
+  grid.innerHTML = list.map((f, i) => `
+    <article class="card rv" style="--d:${Math.min(i % 4, 3) * .06}s">
+      <div class="pic"><img src="assets/figuras/${f.img}" alt="${esc(f.name)}" loading="lazy"></div>
+      <div class="body">
+        <h3>${esc(f.name)}</h3>
+        <span class="weight">⚖ ${f.peso} g</span>
+        <div class="price">${f.precio2 ? `<small>${f.tipo}</small>${fmt(f.precio)}<span class="alt"><small>${f.tipo2}</small>${fmt(f.precio2)}</span>` : fmt(f.precio)}</div>
+        <a class="btn" href="https://ig.me/m/poliatik3d" target="_blank" rel="noopener">Pedir por Instagram</a>
+      </div>
+    </article>`).join('');
+  grid.querySelectorAll('.rv').forEach(el => io ? io.observe(el) : el.classList.add('in'));
+}
+q.addEventListener('input', render); sortEl.addEventListener('change', render);
+render();
+document.querySelectorAll('.rv:not(.card)').forEach(el => io ? io.observe(el) : el.classList.add('in'));
+</script>
+</body>
+</html>
